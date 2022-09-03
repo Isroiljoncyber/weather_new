@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_exercise/config/constants/app_colors.dart';
+import 'package:weather_new/config/constants/app_colors.dart';
 
 abstract class AppTextStyle {
   const AppTextStyle._();

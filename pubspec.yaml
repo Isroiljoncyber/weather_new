@@ -1,4 +1,4 @@
-name: new_exercise
+name: weather_new
 description: A new Flutter project.
 
 publish_to: 'none'
@@ -14,9 +14,14 @@ dependencies:
   # use svg images in this project
   flutter_svg: ^1.1.4
   # additional features for this project
+  html: ^0.15.0
   intl: ^0.17.0
-
+  http: ^0.13.4
+  flutter_bloc: ^8.1.1
+  equatable: ^2.0.5
+  path_provider: ^2.0.11
   cupertino_icons: ^1.0.2
+  dynamic_themes: ^1.1.0
 
 dev_dependencies:
   flutter_test:

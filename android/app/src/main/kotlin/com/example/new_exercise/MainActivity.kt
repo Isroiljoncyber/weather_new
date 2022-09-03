@@ -1,4 +1,4 @@
-package com.example.new_exercise
+package com.example.weather_new
 
 import io.flutter.embedding.android.FlutterActivity
 
