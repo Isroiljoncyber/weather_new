@@ -30,19 +30,15 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<WeatherCubit>(create: (_) => WeatherCubit()),
       ],
-      child: BlocBuilder<WeatherCubit, WeatherState>(
-        builder: (context, state) {
-          return DynamicTheme(
-            defaultThemeId: 0,
-            themeCollection: themeCollection,
-            builder: (BuildContext context, ThemeData themeData) {
-              return MaterialApp(
-                title: 'Flutter Demo',
-                debugShowCheckedModeBanner: false,
-                theme: themeData,
-                onGenerateRoute: (setting) => Routes.generateRoutes(setting),
-              );
-            },
+      child: DynamicTheme(
+        defaultThemeId: 0,
+        themeCollection: themeCollection,
+        builder: (BuildContext context, ThemeData themeData) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            debugShowCheckedModeBanner: false,
+            theme: themeData,
+            onGenerateRoute: (setting) => Routes.generateRoutes(setting),
           );
         },
       ),

@@ -11,24 +11,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
-  late AnimationController animationController;
-
-  late Animation<double> animationScale;
-  late Animation<double> animationScale1;
-
-  @override
-  void initState() {
-    // animationController = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(milliseconds: 500),
-    // );
-    //
-    // animationScale =
-    //     Tween<double>(begin: 1, end: 0).animate(animationController);
-    // animationScale1 =
-    //     Tween<double>(begin: 0, end: 1).animate(animationController1);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
