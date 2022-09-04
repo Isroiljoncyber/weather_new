@@ -11,11 +11,41 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
+  late AnimationController animationController1;
+
+  late AnimationController animationController2;
+
+  late Animation<double> scaleAnim1;
+  late Animation<double> scaleAnim2;
+
+  @override
+  void initState() {
+    animationController1 = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 100));
+    animationController2 = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 100));
+
+    scaleAnim1 = Tween<double>(begin: 1, end: 0).animate(animationController1);
+    scaleAnim2 = Tween<double>(begin: 0, end: 1).animate(animationController2);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WeatherCubit, WeatherState>(
       builder: (context, state) {
+        int count = context.read<WeatherCubit>().counter;
+        if(count >= 1 ){
+          animationController2.forward();
+        } else {
+          animationController2.reverse();
+        }
+        if(count >=10 ){
+          animationController1.forward();
+        } else {
+          animationController1.reverse();
+        }
         return Scaffold(
           appBar: AppBar(
             title: const Text("Weather Counter"),
@@ -34,9 +64,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                       ),
                     if (state is! WeatherOnProgressState)
                       Text(
-                        context
-                            .read<WeatherCubit>()
-                            .weatherStr,
+                        context.read<WeatherCubit>().weatherStr,
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 16),
                       ),
@@ -46,10 +74,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      context
-                          .read<WeatherCubit>()
-                          .counter
-                          .toString(),
+                      context.read<WeatherCubit>().counter.toString(),
                       style: const TextStyle(fontSize: 30),
                     )
                   ],
@@ -91,40 +116,44 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Visibility(
-                            maintainInteractivity: true,
-                            maintainState: true,
-                            maintainSize: true,
-                            maintainAnimation: true,
-                            visible: context.read<WeatherCubit>().counter != 10,
-                            child: FloatingActionButton(
-                              onPressed: () {
-                                context.read<WeatherCubit>().increase();
-                              },
-                              child: const Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                            ),
+                          AnimatedBuilder(
+                            animation: animationController1,
+                            builder: (context, child) {
+                              return AnimatedScale(
+                                scale: scaleAnim1.value,
+                                duration: const Duration(milliseconds: 100),
+                                child: FloatingActionButton(
+                                  onPressed: () {
+                                    context.read<WeatherCubit>().increase();
+                                  },
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                           const SizedBox(
                             height: 20,
                           ),
-                          Visibility(
-                            maintainInteractivity: true,
-                            maintainAnimation: true,
-                            maintainSize: true,
-                            maintainState: true,
-                            visible: context.read<WeatherCubit>().counter != 0,
-                            child: FloatingActionButton(
-                              onPressed: () {
-                                context.read<WeatherCubit>().decrease();
-                              },
-                              child: const Icon(
-                                Icons.remove,
-                                color: Colors.white,
-                              ),
-                            ),
+                          AnimatedBuilder(
+                            animation: animationController2,
+                            builder: (BuildContext context, Widget? child) {
+                              return AnimatedScale(
+                                duration: const Duration(milliseconds: 100),
+                                scale: scaleAnim2.value,
+                                child: FloatingActionButton(
+                                  onPressed: () {
+                                    context.read<WeatherCubit>().decrease();
+                                  },
+                                  child: const Icon(
+                                    Icons.remove,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
