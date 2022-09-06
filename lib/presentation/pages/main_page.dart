@@ -1,5 +1,6 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_new/data/cubits/weather_cubit.dart';
 
@@ -10,8 +11,13 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
+
+
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   late AnimationController animationController1;
+  final service = FlutterBackgroundService();
+
+
 
   late AnimationController animationController2;
 
@@ -36,12 +42,12 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     return BlocBuilder<WeatherCubit, WeatherState>(
       builder: (context, state) {
         int count = context.read<WeatherCubit>().counter;
-        if(count >= 1 ){
+        if (count >= 1) {
           animationController2.forward();
         } else {
           animationController2.reverse();
         }
-        if(count >=10 ){
+        if (count >= 10) {
           animationController1.forward();
         } else {
           animationController1.reverse();
